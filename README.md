@@ -1,7 +1,7 @@
 <<<<<<< HEAD
 # pg-admission
 
-# Welcome to your Lovable project
+# Welcome to PG Admission project
 
 ## Project info
 
