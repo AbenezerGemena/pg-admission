@@ -7,9 +7,10 @@ interface RoleCardProps {
   description: string;
   icon: LucideIcon;
   onClick: () => void;
+  onCreateAccount?: () => void; // Add this line
 }
 
-export function RoleCard({ title, description, icon: Icon, onClick }: RoleCardProps) {
+export function RoleCard({ title, description, icon: Icon, onClick, onCreateAccount }: RoleCardProps) {
   return (
     <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 hover:border-primary/50">
       <CardHeader className="text-center pb-4">
@@ -21,13 +22,22 @@ export function RoleCard({ title, description, icon: Icon, onClick }: RoleCardPr
           {description}
         </CardDescription>
       </CardHeader>
-      <CardContent className="pt-0">
+      <CardContent className="pt-0 space-y-2">
         <Button 
           onClick={onClick} 
           className="w-full bg-gradient-to-r from-primary to-primary-light hover:from-primary-dark hover:to-primary transition-all duration-300"
         >
           Login as {title}
         </Button>
+        {title === "Student" && onCreateAccount && (
+          <Button
+            variant="outline"
+            className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+            onClick={onCreateAccount}
+          >
+            Create Account
+          </Button>
+        )}
       </CardContent>
     </Card>
   );

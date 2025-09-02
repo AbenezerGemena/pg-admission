@@ -34,7 +34,8 @@ export default function AdminDashboard() {
     { id: 1, student: "Alice Johnson", program: "M.Tech CS", department: "CSE", status: 'submitted' as const, date: "2024-01-20" },
     { id: 2, student: "Bob Smith", program: "M.A. English", department: "English", status: 'under-review' as const, date: "2024-01-19" },
     { id: 3, student: "Carol Brown", program: "M.Sc. Physics", department: "Physics", status: 'accepted' as const, date: "2024-01-18" },
-    { id: 4, student: "David Wilson", program: "M.Tech EE", department: "EEE", status: 'under-review' as const, date: "2024-01-17" }
+    { id: 4, student: "David Wilson", program: "M.Tech EE", department: "EEE", status: 'under-review' as const, date: "2024-01-17" },
+    { id: 5, student: "Eva Davis", program: "M.Sc. Chemistry", department: "Chemistry", status: 'rejected' as const, date: "2024-01-16" }
   ];
 
   const departments = [
@@ -42,13 +43,18 @@ export default function AdminDashboard() {
     { name: "Electrical Engineering", head: "Dr. Sarah Wilson", applications: 20, accepted: 15 },
     { name: "English Literature", head: "Dr. Emily Brown", applications: 15, accepted: 12 },
     { name: "Physics", head: "Dr. Michael Davis", applications: 18, accepted: 14 },
-    { name: "Mathematics", head: "Dr. Lisa Garcia", applications: 11, accepted: 8 }
+    { name: "Mathematics", head: "Dr. Lisa Garcia", applications: 11, accepted: 8 },
+    { name: "Chemistry", head: "Dr. James Martinez", applications: 10, accepted: 7 },
+    { name: "Biology", head: "Dr. Robert Rodriguez", applications: 8, accepted: 6 }
+
   ];
 
   const announcements = [
     { id: 1, title: "Application Deadline Extended", date: "2024-01-15", type: "important" },
     { id: 2, title: "New Department Added", date: "2024-01-10", type: "info" },
-    { id: 3, title: "System Maintenance Scheduled", date: "2024-01-08", type: "warning" }
+    { id: 3, title: "System Maintenance Scheduled", date: "2024-01-08", type: "warning" },
+    { id: 4, title: "Welcome New Managers", date: "2024-01-05", type: "info" },
+    { id: 5, title: "COVID-19 Guidelines Update", date: "2024-01-02", type: "important" }
   ];
 
   return (

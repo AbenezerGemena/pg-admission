@@ -47,14 +47,42 @@ const roles = [
 export default function Login() {
   const navigate = useNavigate();
   const [showStudentOptions, setShowStudentOptions] = useState(false);
+  const [showLoginForm, setShowLoginForm] = useState(false);
+  const [loginRole, setLoginRole] = useState<string | null>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // Add registration state
+  const [showStudentRegisterForm, setShowStudentRegisterForm] = useState(false);
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [registerPhone, setRegisterPhone] = useState("");
+
+  // Dummy authentication function
+  const handleAuthLogin = () => {
+    if (loginRole === "student") {
+      navigate("/student-dashboard");
+    } else if (loginRole === "admin") {
+      navigate("/admin-dashboard");
+    } else if (loginRole === "pg-office") {
+      navigate("/pg-coordination-dashboard");
+    } else if (loginRole === "department") {
+      navigate("/department-dashboard");
+    } else if (loginRole === "registrar") {
+      navigate("/registrar-dashboard");
+    }
+  };
+
+  // Dummy registration function
+  const handleStudentRegisterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Replace with real registration logic
+    // For now, just navigate to student dashboard
+    navigate("/student-dashboard");
+  };
 
   const handleRoleSelect = (role: typeof roles[0]) => {
-    if (role.id === 'student') {
-      setShowStudentOptions(true);
-    } else {
-      // For demo purposes, navigate directly to dashboards
-      navigate(role.path);
-    }
+    setLoginRole(role.id);
+    setShowLoginForm(true);
   };
 
   const handleStudentLogin = () => {
@@ -65,6 +93,61 @@ export default function Login() {
     navigate('/student-register');
   };
 
+  // Student registration form
+  if (showStudentRegisterForm) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-background flex items-center justify-center">
+        <Card className="w-full max-w-md mx-auto">
+          <CardHeader>
+            <CardTitle>Create Student Account</CardTitle>
+            <CardDescription>
+              Fill in your details to create an account
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleStudentRegisterSubmit} className="space-y-4">
+              <input
+                type="email"
+                placeholder="Email"
+                value={registerEmail}
+                required
+                onChange={e => setRegisterEmail(e.target.value)}
+                className="w-full border rounded px-3 py-2"
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={registerPassword}
+                required
+                onChange={e => setRegisterPassword(e.target.value)}
+                className="w-full border rounded px-3 py-2"
+              />
+              <input
+                type="tel"
+                placeholder="Phone Number"
+                value={registerPhone}
+                required
+                onChange={e => setRegisterPhone(e.target.value)}
+                className="w-full border rounded px-3 py-2"
+              />
+              <Button type="submit" className="w-full bg-primary text-white">
+                Create Account
+              </Button>
+              <Button
+                variant="ghost"
+                className="w-full mt-2 text-muted-foreground"
+                onClick={() => setShowStudentRegisterForm(false)}
+              >
+                ← Back
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Student options
   if (showStudentOptions) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-background">
@@ -103,7 +186,7 @@ export default function Login() {
                 </CardHeader>
                 <CardContent>
                   <Button 
-                    onClick={handleStudentRegister}
+                    onClick={() => setShowStudentRegisterForm(true)}
                     variant="outline"
                     className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                   >
@@ -124,6 +207,57 @@ export default function Login() {
             </div>
           </div>
         </div>
+      </div>
+    );
+  }
+
+  if (showLoginForm && loginRole) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-background flex items-center justify-center">
+        <Card className="w-full max-w-md mx-auto">
+          <CardHeader>
+            <CardTitle>{roles.find(r => r.id === loginRole)?.title} Login</CardTitle>
+            <CardDescription>
+              Enter your credentials to continue
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form
+              onSubmit={e => {
+                e.preventDefault();
+                handleAuthLogin();
+              }}
+              className="space-y-4"
+            >
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                required
+                onChange={e => setEmail(e.target.value)}
+                className="w-full border rounded px-3 py-2"
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                required
+                onChange={e => setPassword(e.target.value)}
+                className="w-full border rounded px-3 py-2"
+              />
+              <Button type="submit" className="w-full bg-primary text-white">
+                Login
+              </Button>
+              <Button
+                variant="ghost"
+                className="w-full mt-2 text-muted-foreground"
+                onClick={() => setShowLoginForm(false)}
+              >
+                ← Back
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     );
   }
@@ -157,6 +291,11 @@ export default function Login() {
                 description={role.description}
                 icon={role.icon}
                 onClick={() => handleRoleSelect(role)}
+                onCreateAccount={
+                  role.id === "student"
+                    ? () => setShowStudentRegisterForm(true)
+                    : undefined
+                }
               />
             ))}
           </div>
